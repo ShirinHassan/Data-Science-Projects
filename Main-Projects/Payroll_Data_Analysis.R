@@ -22,7 +22,7 @@ class(PayrollData$Projected.Annual.Salary)
         PayrollData$Q2.Payments = as.numeric(gsub("\\$", "", PayrollData$Q2.Payments))
         PayrollData$Q3.Payments = as.numeric(gsub("\\$", "", PayrollData$Q3.Payments))
         PayrollData$Q4.Payments = as.numeric(gsub("\\$", "", PayrollData$Q4.Payments))
-        PayrollData$Payments.Over.Base.Pay = as.numeric(gsub("\\$", "", PayrollData$Payments.Over.Base.Pay)) # remove this one 
+        PayrollData$Payments.Over.Base.Pay = as.numeric(gsub("\\$", "", PayrollData$Payments.Over.Base.Pay)) 
         PayrollData$Total.Payments = as.numeric(gsub("\\$", "", PayrollData$Total.Payments))
         PayrollData$Base.Pay = as.numeric(gsub("\\$", "", PayrollData$Base.Pay))
         PayrollData$Permanent.Bonus.Pay = as.numeric(gsub("\\$", "", PayrollData$Permanent.Bonus.Pay))
@@ -66,7 +66,6 @@ plot +  geom_boxplot(fill='white', color="darkblue") +
     # The highest salary outlier belongs to Airports LAWA (a couple of people are really at the top!)
 
 # Hypothesis testing 
-
 # H0 = Mean salaries in 2015 and 2016 are equal
 # H1 = 2015 mean salary is higher than 2016
 
@@ -88,6 +87,6 @@ t.test(Payroll2015$Projected.Annual.Salary, Payroll2016$Projected.Annual.Salary,
 
 
 # Conclusion: 2016 and 2015 annual salaries different 
-            # Mean of 2016 annual salary is greater than mean of 2015 annual salary 
+            # 2016 annual salary is greater than 2015 annual salary 
 
 
