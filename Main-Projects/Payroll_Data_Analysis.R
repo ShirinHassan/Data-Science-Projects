@@ -67,8 +67,27 @@ plot +  geom_boxplot(fill='white', color="darkblue") +
 
 # Hypothesis testing 
 
+# H0 = Mean salaries in 2015 and 2016 are equal
+# H1 = 2015 mean salary is higher than 2016
+
+# Creating two samples 
+Payroll2016 <- PayrollData[ which(PayrollData$Year == 2016),]
+  str(Payroll2016)
+Payroll2015 <- PayrollData[ which(PayrollData$Year == 2015),]
+  str(Payroll2015)
+
+# Fisher's f-test to compare viariances 
+var.test(Payroll2015$Projected.Annual.Salary, Payroll2016$Projected.Annual.Salary)
+  # p valuea < 0.05 we can assume that the two variances are not homogeneous (reject H0)
+
+# t-test
+t.test(Payroll2015$Projected.Annual.Salary, Payroll2016$Projected.Annual.Salary,
+      paired = FALSE, var.equal = FALSE)
+      qt(0.975, 119580)
+      # P value < 0.05 - reject null 
 
 
-
+# Conclusion: 2016 and 2015 annual salaries different 
+            # Mean of 2016 annual salary is greater than mean of 2015 annual salary 
 
 
