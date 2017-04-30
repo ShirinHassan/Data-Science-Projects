@@ -130,6 +130,7 @@ Payroll.subset <- subset(PayrollData,  select=c("Average.Health.Cost",
 # Notes: 
 # Q3 and Q4 are strongly correlated will eliminate one once the model is tested
 summary(Payroll.subset)
+str(Payroll.subset)
 
 
 # split into training and testing sets 
@@ -178,9 +179,15 @@ summary(reg)
 vif(reg) # check 
 
 
-# Evaluate the final model: 
-Train.predict <- predict(reg, data=train)
-Test.predict < predict(reg, data=test)
+# Prediction model: 
+Train.predict <- predict(reg, newdata= subset(train, select=c("Average.Health.Cost","Average.Basic.Life"
+                                                              "Projected.Annual.Salary", "Average.Dental.Cost"
+                                                              "Q1.Payments", "Q2.Payments"))
+                         
+Test.predict < predict(reg, newdata= subset(test, select=c("Average.Health.Cost","Average.Basic.Life"
+                                                            "Projected.Annual.Salary", "Average.Dental.Cost"
+                                                            "Q1.Payments", "Q2.Payments"))
+
 
 
 
