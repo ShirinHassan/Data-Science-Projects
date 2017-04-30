@@ -153,7 +153,7 @@ summary(reg) # R-squared explains 84% of variations - this is good
 # component residual plot to check for linearity 
 crPlots(reg) 
 
-# Eliminate outliers to imrove the model 
+# Eliminate outliers to improve the model 
 # Identify outliers
 cutoff <- 4/(nrow(train)-length(reg$coefficients)-2)
 plot(reg, which=4, cook.levels=cutoff)
@@ -180,13 +180,13 @@ vif(reg) # check
 
 
 # Prediction model: 
-Train.predict <- predict(reg, newdata= subset(train, select=c("Average.Health.Cost","Average.Basic.Life"
-                                                              "Projected.Annual.Salary", "Average.Dental.Cost"
-                                                              "Q1.Payments", "Q2.Payments"))
+Train.predict <- predict(reg, newdata= subset(train, select=c("Average.Health.Cost","Average.Basic.Life",
+                                                              "Projected.Annual.Salary", "Average.Dental.Cost",
+                                                              "Q1.Payments", "Q2.Payments"))) 
                          
-Test.predict < predict(reg, newdata= subset(test, select=c("Average.Health.Cost","Average.Basic.Life"
-                                                            "Projected.Annual.Salary", "Average.Dental.Cost"
-                                                            "Q1.Payments", "Q2.Payments"))
+Test.predict < predict(reg, newdata= subset(test, select=c("Average.Health.Cost","Average.Basic.Life",
+                                                            "Projected.Annual.Salary", "Average.Dental.Cost",
+                                                            "Q1.Payments", "Q2.Payments")))
 
 
 
