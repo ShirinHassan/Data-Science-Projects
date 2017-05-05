@@ -179,15 +179,7 @@ summary(reg)
 vif(reg) # check 
 
 
-# Prediction model: 
-Train.predict <- predict(reg, newdata= subset(train, select=c("Average.Health.Cost","Average.Basic.Life",
-                                                              "Projected.Annual.Salary", "Average.Dental.Cost",
-                                                              "Q1.Payments", "Q2.Payments"))) 
-                         
-Test.predict < predict(reg, newdata= subset(test, select=c("Average.Health.Cost","Average.Basic.Life",
-                                                            "Projected.Annual.Salary", "Average.Dental.Cost",
-                                                            "Q1.Payments", "Q2.Payments")))
-
+# In progress 
 
 
 
