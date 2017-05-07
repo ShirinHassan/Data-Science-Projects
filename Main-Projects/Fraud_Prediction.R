@@ -7,7 +7,6 @@
   library(ROCR) # ROC Curve 
   library(tree)
   library(rpart) # Decision tree 
-  library(e1071) # for SVM 
 
 #############################################################################
 
@@ -42,9 +41,6 @@ train <- FraudDat[Split,]
 test <- FraudDat[-Split,]
   nrow(train) 
   nrow(test)
-  table(FraudDat$Class) 
-  (284316)/(285316+492) # 99.5% base accuracy 
-
 
 # Logistic regression 
 model <- glm(Class ~ ., data = train, family = "binomial")
@@ -61,7 +57,7 @@ Anovamodel <- anova(model, test="Chisq")
 predict1 <- predict.glm(model, newdata = test)
   # Confusion matrix
   table(test$Class, predict1 > 0.5)
-  (85277+92)/(85277+92+17+55) # 99.9
+  (85277+92)/(85277+92+17+55) # 99.9%
 
 # ROC Curve 
 ROC <- prediction(predict1, test$Class)
