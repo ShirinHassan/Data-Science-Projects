@@ -5,8 +5,9 @@
   library(caret) 
   library(gplots) 
   library(ROCR) # ROC Curve 
-  library(tree)
   library(rpart) # Decision tree 
+  library(randomForest)
+
 
 #############################################################################
 
@@ -15,7 +16,8 @@
 FraudData <- read.csv("C:/Users/sherr/Desktop/R/creditcard.csv")
   head(FraudData)
   str(FraudData)
-  summary(FraudData)
+  summary(FraudData) # check for missing data 
+  sum(is.na(FraudData$Class))# 0 
 # Class variables represents fraud, 0: No 1: Yes 
 # Explore fraud
   # convert to factor 
@@ -43,15 +45,12 @@ test <- FraudDat[-Split,]
   nrow(test)
 
 # Logistic regression 
-model <- glm(Class ~ ., data = train, family = "binomial")
+model <- glm(Class ~ ., data = train, family=binomial)
   summary(model)
   # Strong predictors: 
-    # V4, V8, V10, V13, V14, V20, V21, V22,V27,V28
+    # V4, V8, V10, V14, V20, V21, V22
     # Surprisingly, amount spent is not a very strong predictor on fraud 
 
-# ANOVA 
-Anovamodel <- anova(model, test="Chisq")
-  summary(Anovamodel)
 
 # Evaluate the model 
 predict1 <- predict.glm(model, newdata = test)
@@ -61,9 +60,15 @@ predict1 <- predict.glm(model, newdata = test)
 
 # ROC Curve 
 ROC <- prediction(predict1, test$Class)
-ROCRper <- performance(ROC, 'tpr','fpr')
-plot(ROCRper, colorize = TRUE, text.adj = c(-0.2,1.7))
-# The curve shows good accuracy 
+  ROCRper <- performance(ROC, 'tpr','fpr')
+  plot(ROCRper, colorize = TRUE, text.adj = c(-0.2,1.7))
+  abline(0, 1)
+  
+# AUC 
+perf <- performance(ROC, measure = "auc")
+perf # 98% 
+# The curve and AUC show good accuracy 
+
 
 ################################################################################
 
@@ -75,24 +80,39 @@ library(RColorBrewer)
   
 Tree <- rpart(Class ~ ., data = train, method = "class",
               minsplit = 2, minbucket = 1, cp=-1)
-  Tree
+
+
   text(Tree)
   summary(Tree)
+  
 # plot Tree 
   fancyRpartPlot(Tree)
+  
 # cross validate 
   printcp(Tree) 
+  
 # Prune
   mytree <- prune(Tree, cp=.05)
   fancyRpartPlot(mytree)
+  # Main predictors are: V17, V14 and V12 
+  
 # Predict 
-  Pred.Tree <- predict(mytree, newdata = test, type="class") 
-  
+  Pred.Tree <- predict(mytree, data = test, type="class") 
 
+# Evaluate using confusion matrix 
+  confusionMatrix(Pred.Tree, test$Class) # 99%
 
-  
-  
 ##################################################################################
-  
-# In progress 
+
+# Random Forest 
+
+RF = randomForest(Class ~ .,  
+                    ntree = 100,
+                    data = train)
+plot(RF)  
+print(RF)
+# Confusion matrix 
+(199005+270)/(16+75+199005+270) # 99.9%
+# Out of Bag error rate: 0.05% - This shows good model accuracy 
+
 
