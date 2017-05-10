@@ -111,9 +111,33 @@ RF = randomForest(Class ~ .,
                     data = train)
 plot(RF)  
 print(RF)
-# Confusion matrix 
+# Confusion matrix on the train data set 
 (199005+270)/(16+75+199005+270) # 99.9%
 # Out of Bag error rate: 0.05% - This shows good model accuracy 
 
 
+# Variable Importance - Top 10 
+varImpPlot(RF,  
+           sort = T,
+           n.var=10)
+          # Top var is V17, 
+
+# Variable Importance
+var.imp = data.frame(importance(RF, type=2))
+  Variables = row.names(var.imp)  
+  print(var.imp[order(var.imp$MeanDecreaseGini,decreasing = T),])
+  
+# Top 10 predictors in order (Mean decrease Gini)
+#  V17: 163.169666  V12: 78.136809  V10: 61.521629  
+#  V14: 61.253612   V16: 47.574183  V11: 44.340345  
+#  V9 22.906760     V14: 17.793561  V7: 15.936090  V18: 15.327914 
+  
+# Predict on test data set 
+PredRF <- predict(RF, test)
+confusionMatrix(PredRF, test$Class) # 99.9 % 
+
+
 # In progress 
+
+
+
