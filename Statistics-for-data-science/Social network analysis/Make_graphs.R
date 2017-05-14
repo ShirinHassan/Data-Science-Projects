@@ -29,6 +29,6 @@ gnm1 <- sample_gnm(20, 50, directed = FALSE, loops = FALSE)
 		# gnm model looks at the number of edges in the graph
 		plot(gnm1)
 
-# gpa 
+# preferential attachment
 gpa1 <- sample_pa(20, power = 1)
 		# power gives the edges weight 
